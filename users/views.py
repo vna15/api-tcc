@@ -46,6 +46,16 @@ def user_manager(request):
         if not CEP.isdigit() or len(CEP) != 8:
             return Response({"error": "CEP must contain exactly 8 numeric characters."}, status=status.HTTP_400_BAD_REQUEST)
 
+        # Validação do campo age
+        age = data.get('age')
+        if age is not None:
+            try:
+                age_int = int(age)
+                if age_int <= 0:
+                    raise ValueError
+            except ValueError:
+                return Response({"error": "age must be a positive integer."}, status=status.HTTP_400_BAD_REQUEST)
+
         serializer = UsersSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
@@ -72,6 +82,16 @@ def user_manager(request):
         CEP = request.data.get('CEP')
         if CEP and (not CEP.isdigit() or len(CEP) != 8):
             return Response({"error": "CEP must contain exactly 8 numeric characters."}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Validação do campo age
+        age = request.data.get('age')
+        if age is not None:
+            try:
+                age_int = int(age)
+                if age_int <= 0:
+                    raise ValueError
+            except ValueError:
+                return Response({"error": "age must be a positive integer."}, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = UsersSerializer(user, data=request.data)
         if serializer.is_valid():
