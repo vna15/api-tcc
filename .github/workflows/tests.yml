@@ -25,10 +25,10 @@ jobs:
         run: python manage.py test
 
       - name: Start application
-          run: python manage.py runserver
+        run: python manage.py runserver
 
       - name: Run Robot Tests
-          run: robot users/tests/functionalTests/tests_functional_post.robot
+        run: robot users/tests/functionalTests/tests_functional_post.robot
 
       - name: Stop application
-          run: killall python
+        run: killall python
