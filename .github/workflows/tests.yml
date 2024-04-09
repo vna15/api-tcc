@@ -12,19 +12,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Construção da imagem Docker
+        run: docker build -t tests .
+
       - name: Build and run Docker container
         run: docker-compose up --build -d
 
+      - name: Inicialização do contêiner Docker
+        run: docker run -d -p 8000:8000 tests python manage.py runserver 0.0.0.0:8000
+
       - name: Wait for Django server to start
         run: sleep 10
-
-#      - name: Setup Python
-#        uses: actions/setup-python@v2
-#        with:
-#          python-version: '3.x'
-
-#      - name: Install dependencies
-#        run: pip install -r requirements.txt
 
       - name: Run tests
         run: docker-compose run web python manage.py test
