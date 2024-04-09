@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 8000
 
 # Comando padrão para iniciar a aplicação usando Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "nome_do_projeto.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "apiTCC.wsgi:application"]
