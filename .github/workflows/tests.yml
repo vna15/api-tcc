@@ -21,7 +21,8 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Start Django server
-        run: python manage.py runserver
+        run: python manage.py runserver &
+        background: true  # Executa em segundo plano
 
   test:
     runs-on: ubuntu-latest
