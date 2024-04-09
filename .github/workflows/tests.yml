@@ -18,11 +18,17 @@ jobs:
       - name: Build and run Docker container
         run: docker-compose up --build -d
 
-      - name: Inicialização do contêiner Docker
-        run: docker run -d -p 8000:8000 tests python manage.py runserver
+#      - name: Inicialização do contêiner Docker
+#        run: docker run -d -p 8000:8000 tests python manage.py runserver
 
-      - name: Wait for Django server to start
-        run: sleep 10
+          # Passo para verificar se o servidor Docker está acessível
+      - name: Check if Docker server is accessible
+        run: |
+      # Aguarda alguns segundos para o servidor iniciar completamente
+          sleep 10
+
+      # Verifica se o servidor está acessível
+          curl --retry 10 --retry-connrefused http://localhost:8000/
 
       - name: Run tests
         run: docker-compose run web python manage.py test

@@ -75,7 +75,9 @@ Verificar Limite de Caracteres no Campo de Telefone Celular
     Should Be True    ${response.status_code} in [400, 422]
 
 Verificar Valor Negativo no Campo de Idade
-    Create Session    Users    http://localhost:8000
+    #Create Session    Users    http://localhost:8000
+    ${host}    Set Variable    http://${{ runner.ip }}:8000  # Obtém o IP da máquina de execução
+    Create Session    Users    ${host}
     ${headers}    Create Dictionary    Content-Type=application/json
     ${data}    Create Dictionary    email=test8@example.com    fullName=John Doe    CEP=12345678    age=${-20}  # Negative value
     ${response}    Post Request    Users    /user/    json=${data}    headers=${headers}

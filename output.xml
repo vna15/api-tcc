@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0 (Python 3.9.7 on win32)" generated="2024-04-08T23:32:45.039904" rpa="false" schemaversion="5">
+<suite id="s1" name="Tests Functional Post" source="C:\Users\vnaze\Desktop\TCC\api-tcc\users\tests\functionalTests\tests_functional_post.robot">
+<test id="s1-t1" name="Teste de Criação de Usuário" line="10">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2024-04-08T23:32:45.171932" level="INFO">Creating Session using : alias=Users, url=http://localhost:8000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>Users</arg>
+<arg>http://localhost:8000</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2024-04-08T23:32:45.171932" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:32:45.172940" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:32:45.172940" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:32:45.173903" level="INFO">${data} = {'email': 'test@example.com', 'fullName': 'John Doe', 'CEP': '12345678', 'age': '30'}</msg>
+<var>${data}</var>
+<arg>email=test@example.com</arg>
+<arg>fullName=John Doe</arg>
+<arg>CEP=12345678</arg>
+<arg>age=30</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:32:45.173903" elapsed="0.000000"/>
+</kw>
+<kw name="Post Request" owner="RequestsLibrary">
+<msg time="2024-04-08T23:32:45.174904" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
+<msg time="2024-04-08T23:32:47.244683" level="INFO">POST Request : url=http://localhost:8000/user/ 
+ path_url=/user/ 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '85'} 
+ body=b'{"email": "test@example.com", "fullName": "John Doe", "CEP": "12345678", "age": "30"}' 
+ </msg>
+<msg time="2024-04-08T23:32:47.244683" level="INFO">POST Response : url=http://localhost:8000/user/ 
+ status=201, reason=Created 
+ headers={'Date': 'Tue, 09 Apr 2024 02:32:47 GMT', 'Server': 'WSGIServer/0.2 CPython/3.9.7', 'Content-Type': 'application/json', 'Vary': 'Accept, origin, Cookie', 'Allow': 'OPTIONS, GET, POST, DELETE, PUT', 'X-Frame-Options': 'DENY', 'Content-Length': '242', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id_users":"7687c827-7abd-43c9-a7dc-829adf161192","email":"test@example.com","fullName":"John Doe","CEP":"12345678","age":30,"cellPhone":null,"address":null,"create_at":"2024-04-09T02:32:47.228703Z","update_at":"2024-04-09T02:32:47.228703Z"} 
+ </msg>
+<msg time="2024-04-08T23:32:47.244683" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>Users</arg>
+<arg>/user/</arg>
+<arg>json=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>*DEPRECATED* Please use `POST On Session` instead.</doc>
+<status status="PASS" start="2024-04-08T23:32:45.174904" elapsed="2.069779"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2024-04-08T23:32:47.245662" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>201</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2024-04-08T23:32:47.245662" elapsed="0.001000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-04-08T23:32:47.247659" level="INFO">${json} = {'id_users': '7687c827-7abd-43c9-a7dc-829adf161192', 'email': 'test@example.com', 'fullName': 'John Doe', 'CEP': '12345678', 'age': 30, 'cellPhone': None, 'address': None, 'create_at': '2024-04-09T02:...</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-04-08T23:32:47.246662" elapsed="0.000997"/>
+</kw>
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<msg time="2024-04-08T23:32:47.247659" level="INFO">False</msg>
+<arg>${json}</arg>
+<arg>email</arg>
+<arg>test@example.com</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" start="2024-04-08T23:32:47.247659" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2024-04-08T23:32:45.170940" elapsed="2.077720"/>
+</test>
+<test id="s1-t2" name="Teste de Restrição de E-mail Único" line="19">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2024-04-08T23:32:47.250661" level="INFO">Creating Session using : alias=Users, url=http://localhost:8000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>Users</arg>
+<arg>http://localhost:8000</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2024-04-08T23:32:47.250661" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:32:47.251660" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:32:47.250661" elapsed="0.000999"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:32:47.251660" level="INFO">${data} = {'email': 'test@example.com', 'fullName': 'Jane Doe', 'CEP': '87654321', 'age': '25'}</msg>
+<var>${data}</var>
+<arg>email=test@example.com</arg>
+<arg>fullName=Jane Doe</arg>
+<arg>CEP=87654321</arg>
+<arg>age=25</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:32:47.251660" elapsed="0.000000"/>
+</kw>
+<kw name="Post Request" owner="RequestsLibrary">
+<msg time="2024-04-08T23:32:47.252660" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
+<msg time="2024-04-08T23:32:49.299072" level="INFO">POST Request : url=http://localhost:8000/user/ 
+ path_url=/user/ 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '85'} 
+ body=b'{"email": "test@example.com", "fullName": "Jane Doe", "CEP": "87654321", "age": "25"}' 
+ </msg>
+<msg time="2024-04-08T23:32:49.299072" level="INFO">POST Response : url=http://localhost:8000/user/ 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Tue, 09 Apr 2024 02:32:49 GMT', 'Server': 'WSGIServer/0.2 CPython/3.9.7', 'Content-Type': 'application/json', 'Vary': 'Accept, origin, Cookie', 'Allow': 'OPTIONS, GET, POST, DELETE, PUT', 'X-Frame-Options': 'DENY', 'Content-Length': '33', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"error":"Email already in use."} 
+ </msg>
+<msg time="2024-04-08T23:32:49.299072" level="INFO">${response} = &lt;Response [400]&gt;</msg>
+<var>${response}</var>
+<arg>Users</arg>
+<arg>/user/</arg>
+<arg>json=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>*DEPRECATED* Please use `POST On Session` instead.</doc>
+<status status="PASS" start="2024-04-08T23:32:47.252660" elapsed="2.046412"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${response.status_code} in [400, 409]</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2024-04-08T23:32:49.299072" elapsed="0.000975"/>
+</kw>
+<status status="PASS" start="2024-04-08T23:32:47.249663" elapsed="2.051385"/>
+</test>
+<test id="s1-t3" name="Teste de Campos Obrigatórios na Criação de Usuário" line="26">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2024-04-08T23:32:49.303048" level="INFO">Creating Session using : alias=Users, url=http://localhost:8000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>Users</arg>
+<arg>http://localhost:8000</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2024-04-08T23:32:49.302048" elapsed="0.001000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:32:49.303048" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:32:49.303048" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:32:49.304048" level="INFO">${data} = {'email': 'test2@example.com'}</msg>
+<var>${data}</var>
+<arg>email=test2@example.com</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:32:49.304048" elapsed="0.000000"/>
+</kw>
+<kw name="Post Request" owner="RequestsLibrary">
+<msg time="2024-04-08T23:32:49.305047" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
+<msg time="2024-04-08T23:32:51.350533" level="INFO">POST Request : url=http://localhost:8000/user/ 
+ path_url=/user/ 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '30'} 
+ body=b'{"email": "test2@example.com"}' 
+ </msg>
+<msg time="2024-04-08T23:32:51.350533" level="INFO">POST Response : url=http://localhost:8000/user/ 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Tue, 09 Apr 2024 02:32:51 GMT', 'Server': 'WSGIServer/0.2 CPython/3.9.7', 'Content-Type': 'application/json', 'Vary': 'Accept, origin, Cookie', 'Allow': 'OPTIONS, GET, POST, DELETE, PUT', 'X-Frame-Options': 'DENY', 'Content-Length': '33', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"error":"fullName is required."} 
+ </msg>
+<msg time="2024-04-08T23:32:51.351536" level="INFO">${response} = &lt;Response [400]&gt;</msg>
+<var>${response}</var>
+<arg>Users</arg>
+<arg>/user/</arg>
+<arg>json=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>*DEPRECATED* Please use `POST On Session` instead.</doc>
+<status status="PASS" start="2024-04-08T23:32:49.305047" elapsed="2.046489"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2024-04-08T23:32:51.352533" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>400</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2024-04-08T23:32:51.351536" elapsed="0.000997"/>
+</kw>
+<status status="PASS" start="2024-04-08T23:32:49.302048" elapsed="2.050485"/>
+</test>
+<test id="s1-t4" name="Criar Novo Usuário - E-mail Duplicado" line="33">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2024-04-08T23:32:51.354534" level="INFO">Creating Session using : alias=Users, url=http://localhost:8000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>Users</arg>
+<arg>http://localhost:8000</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2024-04-08T23:32:51.353497" elapsed="0.001037"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:32:51.354534" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:32:51.354534" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:32:51.355523" level="INFO">${data} = {'email': 'test3@example.com', 'fullName': 'John Doe', 'CEP': '12345678', 'age': '30'}</msg>
+<var>${data}</var>
+<arg>email=test3@example.com</arg>
+<arg>fullName=John Doe</arg>
+<arg>CEP=12345678</arg>
+<arg>age=30</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:32:51.355523" elapsed="0.000000"/>
+</kw>
+<kw name="Post Request" owner="RequestsLibrary">
+<msg time="2024-04-08T23:32:51.356499" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
+<msg time="2024-04-08T23:32:53.406012" level="INFO">POST Request : url=http://localhost:8000/user/ 
+ path_url=/user/ 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '86'} 
+ body=b'{"email": "test3@example.com", "fullName": "John Doe", "CEP": "12345678", "age": "30"}' 
+ </msg>
+<msg time="2024-04-08T23:32:53.406012" level="INFO">POST Response : url=http://localhost:8000/user/ 
+ status=201, reason=Created 
+ headers={'Date': 'Tue, 09 Apr 2024 02:32:53 GMT', 'Server': 'WSGIServer/0.2 CPython/3.9.7', 'Content-Type': 'application/json', 'Vary': 'Accept, origin, Cookie', 'Allow': 'OPTIONS, GET, POST, DELETE, PUT', 'X-Frame-Options': 'DENY', 'Content-Length': '243', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"id_users":"aa41f05e-9bec-4471-b2b6-3db5176e9539","email":"test3@example.com","fullName":"John Doe","CEP":"12345678","age":30,"cellPhone":null,"address":null,"create_at":"2024-04-09T02:32:53.401047Z","update_at":"2024-04-09T02:32:53.401047Z"} 
+ </msg>
+<msg time="2024-04-08T23:32:53.407051" level="INFO">${response1} = &lt;Response [201]&gt;</msg>
+<var>${response1}</var>
+<arg>Users</arg>
+<arg>/user/</arg>
+<arg>json=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>*DEPRECATED* Please use `POST On Session` instead.</doc>
+<status status="PASS" start="2024-04-08T23:32:51.355523" elapsed="2.051528"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:32:53.407051" level="INFO">${data} = {'email': 'test3@example.com', 'fullName': 'Jane Doe', 'CEP': '87654321', 'age': '25'}</msg>
+<var>${data}</var>
+<arg>email=test3@example.com</arg>
+<arg>fullName=Jane Doe</arg>
+<arg>CEP=87654321</arg>
+<arg>age=25</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:32:53.407051" elapsed="0.000000"/>
+</kw>
+<kw name="Post Request" owner="RequestsLibrary">
+<msg time="2024-04-08T23:32:53.408048" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
+<msg time="2024-04-08T23:32:53.414070" level="INFO">POST Request : url=http://localhost:8000/user/ 
+ path_url=/user/ 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '86'} 
+ body=b'{"email": "test3@example.com", "fullName": "Jane Doe", "CEP": "87654321", "age": "25"}' 
+ </msg>
+<msg time="2024-04-08T23:32:53.414070" level="INFO">POST Response : url=http://localhost:8000/user/ 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Tue, 09 Apr 2024 02:32:53 GMT', 'Server': 'WSGIServer/0.2 CPython/3.9.7', 'Content-Type': 'application/json', 'Vary': 'Accept, origin, Cookie', 'Allow': 'OPTIONS, GET, POST, DELETE, PUT', 'X-Frame-Options': 'DENY', 'Content-Length': '33', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"error":"Email already in use."} 
+ </msg>
+<msg time="2024-04-08T23:32:53.415013" level="INFO">${response2} = &lt;Response [400]&gt;</msg>
+<var>${response2}</var>
+<arg>Users</arg>
+<arg>/user/</arg>
+<arg>json=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>*DEPRECATED* Please use `POST On Session` instead.</doc>
+<status status="PASS" start="2024-04-08T23:32:53.408048" elapsed="0.006965"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${response2.status_code} in [400, 409]</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2024-04-08T23:32:53.415013" elapsed="0.001001"/>
+</kw>
+<status status="PASS" start="2024-04-08T23:32:51.353497" elapsed="2.063555"/>
+</test>
+<test id="s1-t5" name="Tentar Criar Usuário com CEP Inválido" line="42">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2024-04-08T23:32:53.419040" level="INFO">Creating Session using : alias=Users, url=http://localhost:8000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>Users</arg>
+<arg>http://localhost:8000</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2024-04-08T23:32:53.418040" elapsed="0.001000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:32:53.420041" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:32:53.419040" elapsed="0.001001"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:32:53.420041" level="INFO">${data} = {'email': 'test4@example.com', 'fullName': 'John Doe', 'CEP': 'abc123', 'age': '30'}</msg>
+<var>${data}</var>
+<arg>email=test4@example.com</arg>
+<arg>fullName=John Doe</arg>
+<arg>CEP=abc123</arg>
+<arg>age=30</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:32:53.420041" elapsed="0.000000"/>
+</kw>
+<kw name="Post Request" owner="RequestsLibrary">
+<msg time="2024-04-08T23:32:53.421052" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
+<msg time="2024-04-08T23:32:55.453384" level="INFO">POST Request : url=http://localhost:8000/user/ 
+ path_url=/user/ 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '84'} 
+ body=b'{"email": "test4@example.com", "fullName": "John Doe", "CEP": "abc123", "age": "30"}' 
+ </msg>
+<msg time="2024-04-08T23:32:55.453384" level="INFO">POST Response : url=http://localhost:8000/user/ 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Tue, 09 Apr 2024 02:32:55 GMT', 'Server': 'WSGIServer/0.2 CPython/3.9.7', 'Content-Type': 'application/json', 'Vary': 'Accept, origin, Cookie', 'Allow': 'OPTIONS, GET, POST, DELETE, PUT', 'X-Frame-Options': 'DENY', 'Content-Length': '58', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"error":"CEP must contain exactly 8 numeric characters."} 
+ </msg>
+<msg time="2024-04-08T23:32:55.454429" level="INFO">${response} = &lt;Response [400]&gt;</msg>
+<var>${response}</var>
+<arg>Users</arg>
+<arg>/user/</arg>
+<arg>json=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>*DEPRECATED* Please use `POST On Session` instead.</doc>
+<status status="PASS" start="2024-04-08T23:32:53.421052" elapsed="2.033377"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2024-04-08T23:32:55.455429" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>400</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2024-04-08T23:32:55.454429" elapsed="0.001000"/>
+</kw>
+<status status="PASS" start="2024-04-08T23:32:53.418040" elapsed="2.037389"/>
+</test>
+<test id="s1-t6" name="Verificar Limite de Caracteres no Campo de E-mail" line="49">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2024-04-08T23:32:55.457394" level="INFO">Creating Session using : alias=Users, url=http://localhost:8000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>Users</arg>
+<arg>http://localhost:8000</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2024-04-08T23:32:55.457394" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:32:55.458393" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:32:55.458393" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:32:55.459393" level="INFO">${data} = {'email': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@example.com', 'fullName': 'John Doe', 'CEP': '12345678', 'age': '30'}</msg>
+<var>${data}</var>
+<arg>email=${long_string}@example.com</arg>
+<arg>fullName=John Doe</arg>
+<arg>CEP=12345678</arg>
+<arg>age=30</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:32:55.459393" elapsed="0.000000"/>
+</kw>
+<kw name="Post Request" owner="RequestsLibrary">
+<msg time="2024-04-08T23:32:55.459393" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
+<msg time="2024-04-08T23:32:57.492926" level="INFO">POST Request : url=http://localhost:8000/user/ 
+ path_url=/user/ 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '182'} 
+ body=b'{"email": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@example.com", "fullName": "John Doe", "CEP": "12345678", "age": "30"}' 
+ </msg>
+<msg time="2024-04-08T23:32:57.492926" level="INFO">POST Response : url=http://localhost:8000/user/ 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Tue, 09 Apr 2024 02:32:57 GMT', 'Server': 'WSGIServer/0.2 CPython/3.9.7', 'Content-Type': 'application/json', 'Vary': 'Accept, origin, Cookie', 'Allow': 'OPTIONS, GET, POST, DELETE, PUT', 'X-Frame-Options': 'DENY', 'Content-Length': '59', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"error":"email exceeds maximum length of 100 characters."} 
+ </msg>
+<msg time="2024-04-08T23:32:57.492926" level="INFO">${response} = &lt;Response [400]&gt;</msg>
+<var>${response}</var>
+<arg>Users</arg>
+<arg>/user/</arg>
+<arg>json=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>*DEPRECATED* Please use `POST On Session` instead.</doc>
+<status status="PASS" start="2024-04-08T23:32:55.459393" elapsed="2.033533"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${response.status_code} in [400, 422]</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2024-04-08T23:32:57.493955" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2024-04-08T23:32:55.457394" elapsed="2.037560"/>
+</test>
+<test id="s1-t7" name="Verificar Limite de Caracteres no Campo de Nome Completo" line="56">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2024-04-08T23:32:57.496926" level="INFO">Creating Session using : alias=Users, url=http://localhost:8000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>Users</arg>
+<arg>http://localhost:8000</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2024-04-08T23:32:57.496926" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:32:57.497963" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:32:57.496926" elapsed="0.001037"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:32:57.497963" level="INFO">${data} = {'email': 'test5@example.com', 'fullName': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'CEP': '12345678', 'age': '30'}</msg>
+<var>${data}</var>
+<arg>email=test5@example.com</arg>
+<arg>fullName=${long_string}</arg>
+<arg>CEP=12345678</arg>
+<arg>age=30</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:32:57.497963" elapsed="0.000000"/>
+</kw>
+<kw name="Post Request" owner="RequestsLibrary">
+<msg time="2024-04-08T23:32:57.498962" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
+<msg time="2024-04-08T23:32:59.542800" level="INFO">POST Request : url=http://localhost:8000/user/ 
+ path_url=/user/ 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '179'} 
+ body=b'{"email": "test5@example.com", "fullName": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "CEP": "12345678", "age": "30"}' 
+ </msg>
+<msg time="2024-04-08T23:32:59.542800" level="INFO">POST Response : url=http://localhost:8000/user/ 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Tue, 09 Apr 2024 02:32:59 GMT', 'Server': 'WSGIServer/0.2 CPython/3.9.7', 'Content-Type': 'application/json', 'Vary': 'Accept, origin, Cookie', 'Allow': 'OPTIONS, GET, POST, DELETE, PUT', 'X-Frame-Options': 'DENY', 'Content-Length': '62', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"error":"fullName exceeds maximum length of 100 characters."} 
+ </msg>
+<msg time="2024-04-08T23:32:59.542800" level="INFO">${response} = &lt;Response [400]&gt;</msg>
+<var>${response}</var>
+<arg>Users</arg>
+<arg>/user/</arg>
+<arg>json=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>*DEPRECATED* Please use `POST On Session` instead.</doc>
+<status status="PASS" start="2024-04-08T23:32:57.498962" elapsed="2.043838"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${response.status_code} in [400, 422]</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2024-04-08T23:32:59.543835" elapsed="0.001001"/>
+</kw>
+<status status="PASS" start="2024-04-08T23:32:57.495966" elapsed="2.048870"/>
+</test>
+<test id="s1-t8" name="Verificar Limite de Caracteres no Campo de CEP" line="63">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2024-04-08T23:32:59.546798" level="INFO">Creating Session using : alias=Users, url=http://localhost:8000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>Users</arg>
+<arg>http://localhost:8000</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2024-04-08T23:32:59.546798" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:32:59.547817" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:32:59.547817" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:32:59.548797" level="INFO">${data} = {'email': 'test6@example.com', 'fullName': 'John Doe', 'CEP': '123456789', 'age': '30'}</msg>
+<var>${data}</var>
+<arg>email=test6@example.com</arg>
+<arg>fullName=John Doe</arg>
+<arg>CEP=123456789</arg>
+<arg>age=30</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:32:59.547817" elapsed="0.000980"/>
+</kw>
+<kw name="Post Request" owner="RequestsLibrary">
+<msg time="2024-04-08T23:32:59.548797" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
+<msg time="2024-04-08T23:33:01.568088" level="INFO">POST Request : url=http://localhost:8000/user/ 
+ path_url=/user/ 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '87'} 
+ body=b'{"email": "test6@example.com", "fullName": "John Doe", "CEP": "123456789", "age": "30"}' 
+ </msg>
+<msg time="2024-04-08T23:33:01.568088" level="INFO">POST Response : url=http://localhost:8000/user/ 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Tue, 09 Apr 2024 02:33:01 GMT', 'Server': 'WSGIServer/0.2 CPython/3.9.7', 'Content-Type': 'application/json', 'Vary': 'Accept, origin, Cookie', 'Allow': 'OPTIONS, GET, POST, DELETE, PUT', 'X-Frame-Options': 'DENY', 'Content-Length': '58', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"error":"CEP must contain exactly 8 numeric characters."} 
+ </msg>
+<msg time="2024-04-08T23:33:01.569133" level="INFO">${response} = &lt;Response [400]&gt;</msg>
+<var>${response}</var>
+<arg>Users</arg>
+<arg>/user/</arg>
+<arg>json=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>*DEPRECATED* Please use `POST On Session` instead.</doc>
+<status status="PASS" start="2024-04-08T23:32:59.548797" elapsed="2.020336"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${response.status_code} in [400, 422]</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2024-04-08T23:33:01.569351" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2024-04-08T23:32:59.546798" elapsed="2.023562"/>
+</test>
+<test id="s1-t9" name="Verificar Limite de Caracteres no Campo de Telefone Celular" line="70">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2024-04-08T23:33:01.572361" level="INFO">Creating Session using : alias=Users, url=http://localhost:8000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>Users</arg>
+<arg>http://localhost:8000</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2024-04-08T23:33:01.572361" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:33:01.573359" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:33:01.572361" elapsed="0.000998"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:33:01.573359" level="INFO">${data} = {'email': 'test7@example.com', 'fullName': 'John Doe', 'CEP': '12345678', 'age': '30', 'cellPhone': 'aaaaaaaaaaaaa'}</msg>
+<var>${data}</var>
+<arg>email=test7@example.com</arg>
+<arg>fullName=John Doe</arg>
+<arg>CEP=12345678</arg>
+<arg>age=30</arg>
+<arg>cellPhone=${short_string}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:33:01.573359" elapsed="0.000000"/>
+</kw>
+<kw name="Post Request" owner="RequestsLibrary">
+<msg time="2024-04-08T23:33:01.574361" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
+<msg time="2024-04-08T23:33:03.605583" level="INFO">POST Request : url=http://localhost:8000/user/ 
+ path_url=/user/ 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '116'} 
+ body=b'{"email": "test7@example.com", "fullName": "John Doe", "CEP": "12345678", "age": "30", "cellPhone": "aaaaaaaaaaaaa"}' 
+ </msg>
+<msg time="2024-04-08T23:33:03.605583" level="INFO">POST Response : url=http://localhost:8000/user/ 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Tue, 09 Apr 2024 02:33:03 GMT', 'Server': 'WSGIServer/0.2 CPython/3.9.7', 'Content-Type': 'application/json', 'Vary': 'Accept, origin, Cookie', 'Allow': 'OPTIONS, GET, POST, DELETE, PUT', 'X-Frame-Options': 'DENY', 'Content-Length': '67', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"cellPhone":["Ensure this field has no more than 11 characters."]} 
+ </msg>
+<msg time="2024-04-08T23:33:03.605583" level="INFO">${response} = &lt;Response [400]&gt;</msg>
+<var>${response}</var>
+<arg>Users</arg>
+<arg>/user/</arg>
+<arg>json=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>*DEPRECATED* Please use `POST On Session` instead.</doc>
+<status status="PASS" start="2024-04-08T23:33:01.574361" elapsed="2.031222"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${response.status_code} in [400, 422]</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2024-04-08T23:33:03.605583" elapsed="0.001000"/>
+</kw>
+<status status="PASS" start="2024-04-08T23:33:01.571359" elapsed="2.036222"/>
+</test>
+<test id="s1-t10" name="Verificar Valor Negativo no Campo de Idade" line="77">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2024-04-08T23:33:03.608582" level="INFO">Creating Session using : alias=Users, url=http://localhost:8000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>Users</arg>
+<arg>http://localhost:8000</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2024-04-08T23:33:03.608582" elapsed="0.001000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:33:03.609582" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:33:03.609582" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:33:03.610583" level="INFO">${data} = {'email': 'test8@example.com', 'fullName': 'John Doe', 'CEP': '12345678', 'age': -20}</msg>
+<var>${data}</var>
+<arg>email=test8@example.com</arg>
+<arg>fullName=John Doe</arg>
+<arg>CEP=12345678</arg>
+<arg>age=${-20}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:33:03.610583" elapsed="0.000000"/>
+</kw>
+<kw name="Post Request" owner="RequestsLibrary">
+<msg time="2024-04-08T23:33:03.611583" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
+<msg time="2024-04-08T23:33:05.640603" level="INFO">POST Request : url=http://localhost:8000/user/ 
+ path_url=/user/ 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '85'} 
+ body=b'{"email": "test8@example.com", "fullName": "John Doe", "CEP": "12345678", "age": -20}' 
+ </msg>
+<msg time="2024-04-08T23:33:05.640603" level="INFO">POST Response : url=http://localhost:8000/user/ 
+ status=400, reason=Bad Request 
+ headers={'Date': 'Tue, 09 Apr 2024 02:33:05 GMT', 'Server': 'WSGIServer/0.2 CPython/3.9.7', 'Content-Type': 'application/json', 'Vary': 'Accept, origin, Cookie', 'Allow': 'OPTIONS, GET, POST, DELETE, PUT', 'X-Frame-Options': 'DENY', 'Content-Length': '43', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body={"error":"age must be a positive integer."} 
+ </msg>
+<msg time="2024-04-08T23:33:05.641650" level="INFO">${response} = &lt;Response [400]&gt;</msg>
+<var>${response}</var>
+<arg>Users</arg>
+<arg>/user/</arg>
+<arg>json=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>*DEPRECATED* Please use `POST On Session` instead.</doc>
+<status status="PASS" start="2024-04-08T23:33:03.611583" elapsed="2.030067"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${response.status_code} in [400, 422]</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2024-04-08T23:33:05.641843" elapsed="0.001013"/>
+</kw>
+<status status="PASS" start="2024-04-08T23:33:03.608582" elapsed="2.034274"/>
+</test>
+<test id="s1-t11" name="Deletar Usuário 1" line="84">
+<kw name="Deletar Usuário">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2024-04-08T23:33:05.644850" level="INFO">Creating Session using : alias=Users, url=http://localhost:8000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>Users</arg>
+<arg>http://localhost:8000</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2024-04-08T23:33:05.644850" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:33:05.645851" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:33:05.645851" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:33:05.645851" level="INFO">${data} = {'email': 'test@example.com'}</msg>
+<var>${data}</var>
+<arg>email=${email}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:33:05.645851" elapsed="0.000000"/>
+</kw>
+<kw name="Delete Request" owner="RequestsLibrary">
+<msg time="2024-04-08T23:33:05.645851" level="WARN">Keyword 'RequestsLibrary.Delete Request' is deprecated. Please use `DELETE On Session` instead.</msg>
+<msg time="2024-04-08T23:33:07.694816" level="INFO">DELETE Request : url=http://localhost:8000/user/ 
+ path_url=/user/ 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '29'} 
+ body=b'{"email": "test@example.com"}' 
+ </msg>
+<msg time="2024-04-08T23:33:07.694816" level="INFO">DELETE Response : url=http://localhost:8000/user/ 
+ status=204, reason=No Content 
+ headers={'Date': 'Tue, 09 Apr 2024 02:33:07 GMT', 'Server': 'WSGIServer/0.2 CPython/3.9.7', 'Vary': 'Accept, origin, Cookie', 'Allow': 'OPTIONS, GET, POST, DELETE, PUT', 'X-Frame-Options': 'DENY', 'Content-Length': '0', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body=None 
+ </msg>
+<msg time="2024-04-08T23:33:07.694816" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>Users</arg>
+<arg>/user/</arg>
+<arg>json=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>*DEPRECATED* Please use `DELETE On Session` instead.</doc>
+<status status="PASS" start="2024-04-08T23:33:05.645851" elapsed="2.048965"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2024-04-08T23:33:07.695839" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>204</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2024-04-08T23:33:07.694816" elapsed="0.001023"/>
+</kw>
+<arg>test@example.com</arg>
+<status status="PASS" start="2024-04-08T23:33:05.644850" elapsed="2.050989"/>
+</kw>
+<status status="PASS" start="2024-04-08T23:33:05.643852" elapsed="2.051987"/>
+</test>
+<test id="s1-t12" name="Deletar Usuário 2" line="88">
+<kw name="Deletar Usuário">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2024-04-08T23:33:07.698812" level="INFO">Creating Session using : alias=Users, url=http://localhost:8000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>Users</arg>
+<arg>http://localhost:8000</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2024-04-08T23:33:07.698812" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:33:07.698812" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:33:07.698812" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-04-08T23:33:07.699813" level="INFO">${data} = {'email': 'test3@example.com'}</msg>
+<var>${data}</var>
+<arg>email=${email}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-04-08T23:33:07.698812" elapsed="0.001001"/>
+</kw>
+<kw name="Delete Request" owner="RequestsLibrary">
+<msg time="2024-04-08T23:33:07.699813" level="WARN">Keyword 'RequestsLibrary.Delete Request' is deprecated. Please use `DELETE On Session` instead.</msg>
+<msg time="2024-04-08T23:33:09.755320" level="INFO">DELETE Request : url=http://localhost:8000/user/ 
+ path_url=/user/ 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '30'} 
+ body=b'{"email": "test3@example.com"}' 
+ </msg>
+<msg time="2024-04-08T23:33:09.755320" level="INFO">DELETE Response : url=http://localhost:8000/user/ 
+ status=204, reason=No Content 
+ headers={'Date': 'Tue, 09 Apr 2024 02:33:09 GMT', 'Server': 'WSGIServer/0.2 CPython/3.9.7', 'Vary': 'Accept, origin, Cookie', 'Allow': 'OPTIONS, GET, POST, DELETE, PUT', 'X-Frame-Options': 'DENY', 'Content-Length': '0', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'Cross-Origin-Opener-Policy': 'same-origin'} 
+ body=None 
+ </msg>
+<msg time="2024-04-08T23:33:09.755320" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<var>${response}</var>
+<arg>Users</arg>
+<arg>/user/</arg>
+<arg>json=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>*DEPRECATED* Please use `DELETE On Session` instead.</doc>
+<status status="PASS" start="2024-04-08T23:33:07.699813" elapsed="2.055507"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2024-04-08T23:33:09.756321" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>204</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2024-04-08T23:33:09.755320" elapsed="0.001001"/>
+</kw>
+<arg>test3@example.com</arg>
+<status status="PASS" start="2024-04-08T23:33:07.697812" elapsed="2.058509"/>
+</kw>
+<status status="PASS" start="2024-04-08T23:33:07.697812" elapsed="2.059251"/>
+</test>
+<status status="PASS" start="2024-04-08T23:32:45.041906" elapsed="24.716166"/>
+</suite>
+<statistics>
+<total>
+<stat pass="12" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="12" fail="0" skip="0" id="s1" name="Tests Functional Post">Tests Functional Post</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2024-04-08T23:32:45.174904" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
+<msg time="2024-04-08T23:32:47.252660" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
+<msg time="2024-04-08T23:32:49.305047" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
+<msg time="2024-04-08T23:32:51.356499" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
+<msg time="2024-04-08T23:32:53.408048" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
+<msg time="2024-04-08T23:32:53.421052" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
+<msg time="2024-04-08T23:32:55.459393" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
+<msg time="2024-04-08T23:32:57.498962" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
+<msg time="2024-04-08T23:32:59.548797" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
+<msg time="2024-04-08T23:33:01.574361" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
+<msg time="2024-04-08T23:33:03.611583" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
+<msg time="2024-04-08T23:33:05.645851" level="WARN">Keyword 'RequestsLibrary.Delete Request' is deprecated. Please use `DELETE On Session` instead.</msg>
+<msg time="2024-04-08T23:33:07.699813" level="WARN">Keyword 'RequestsLibrary.Delete Request' is deprecated. Please use `DELETE On Session` instead.</msg>
+</errors>
+</robot>
