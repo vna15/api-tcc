@@ -1,20 +1,19 @@
-# Use a imagem base do Python
+# Use uma imagem base do Python
 FROM python:3.8
 
-# Defina o diretório de trabalho dentro do contêiner
+# Define o diretório de trabalho dentro do contêiner
 WORKDIR /app
 
-# Copie o arquivo requirements.txt para o diretório de trabalho
+# Instala as dependências do projeto
 COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Instale as dependências do projeto
-RUN pip install -r requirements.txt
-
-# Copie todo o conteúdo do diretório atual para o diretório de trabalho dentro do contêiner
+# Copia o código do projeto para o contêiner
 COPY . .
 
-# Exponha a porta 8000 para o servidor web
+# Define a porta em que o servidor Django irá ouvir
 EXPOSE 8000
 
-# Comando padrão para iniciar a aplicação usando Gunicorn
-CMD ["gunicorn", "apiTCC.wsgi:application", "0.0.0.0:8000", "--bind"]
+# Comando para iniciar o servidor Django
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
