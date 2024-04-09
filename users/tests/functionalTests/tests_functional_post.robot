@@ -8,7 +8,7 @@ ${short_string}    aaaaaaaaaaaaa
 
 *** Test Cases ***
 Teste de Criação de Usuário
-    Create Session    Users    http://web:8000
+    Create Session    Users    http://web
     ${headers}    Create Dictionary    Content-Type=application/json
     ${data}    Create Dictionary    email=test@example.com    fullName=John Doe    CEP=12345678    age=30
     ${response}    Post Request    Users    /user/    json=${data}    headers=${headers}
@@ -17,7 +17,7 @@ Teste de Criação de Usuário
     Dictionary Should Contain Key    ${json}    email    test@example.com
 
 Teste de Restrição de E-mail Único
-    Create Session    Users    http://web:8000
+    Create Session    Users    http://web:80
     ${headers}    Create Dictionary    Content-Type=application/json
     ${data}    Create Dictionary    email=test@example.com    fullName=Jane Doe    CEP=87654321    age=25
     ${response}    Post Request    Users    /user/    json=${data}    headers=${headers}
