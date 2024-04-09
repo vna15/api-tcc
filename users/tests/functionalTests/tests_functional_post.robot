@@ -40,21 +40,21 @@ Criar Novo Usuário - E-mail Duplicado
     Should Be True    ${response2.status_code} in [400, 409]
 
 Tentar Criar Usuário com CEP Inválido
-    Create Session    Users    http://localhost:8000
+    Create Session    Users    http://127.0.0.1:80
     ${headers}    Create Dictionary    Content-Type=application/json
     ${data}    Create Dictionary    email=test4@example.com    fullName=John Doe    CEP=abc123    age=30  # Invalid CEP format
     ${response}    Post Request    Users    /user/    json=${data}    headers=${headers}
     Should Be Equal As Strings    ${response.status_code}    400
 
 Verificar Limite de Caracteres no Campo de E-mail
-    Create Session    Users    http://localhost:8000
+    Create Session    Users    http://127.0.0.1:8000
     ${headers}    Create Dictionary    Content-Type=application/json
     ${data}    Create Dictionary    email=${long_string}@example.com    fullName=John Doe    CEP=12345678    age=30  # Exceeds maximum length
     ${response}    Post Request    Users    /user/    json=${data}    headers=${headers}
     Should Be True    ${response.status_code} in [400, 422]
 
 Verificar Limite de Caracteres no Campo de Nome Completo
-    Create Session    Users    http://localhost:8000
+    Create Session    Users    http://localhost:80
     ${headers}    Create Dictionary    Content-Type=application/json
     ${data}    Create Dictionary    email=test5@example.com    fullName=${long_string}    CEP=12345678    age=30  # Exceeds maximum length
     ${response}    Post Request    Users    /user/    json=${data}    headers=${headers}
@@ -68,16 +68,14 @@ Verificar Limite de Caracteres no Campo de CEP
     Should Be True    ${response.status_code} in [400, 422]
 
 Verificar Limite de Caracteres no Campo de Telefone Celular
-    Create Session    Users    http://localhost:8000
+    Create Session    Users    http://app:8000
     ${headers}    Create Dictionary    Content-Type=application/json
     ${data}    Create Dictionary    email=test7@example.com    fullName=John Doe    CEP=12345678    age=30    cellPhone=${short_string}  # Exceeds maximum length
     ${response}    Post Request    Users    /user/    json=${data}    headers=${headers}
     Should Be True    ${response.status_code} in [400, 422]
 
 Verificar Valor Negativo no Campo de Idade
-    #Create Session    Users    http://localhost:8000
-    ${host}    Set Variable    http://${{ runner.ip }}:8000  # Obtém o IP da máquina de execução
-    Create Session    Users    ${host}
+    Create Session    Users    http://web:8000
     ${headers}    Create Dictionary    Content-Type=application/json
     ${data}    Create Dictionary    email=test8@example.com    fullName=John Doe    CEP=12345678    age=${-20}  # Negative value
     ${response}    Post Request    Users    /user/    json=${data}    headers=${headers}
