@@ -1,4 +1,4 @@
-name: Run Tests
+name: Run Dockerized Django App
 
 on:
   push:
@@ -6,43 +6,28 @@ on:
       - main
 
 jobs:
-  start_server:
+  build_and_run:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
+      - name: Build and run Docker container
+        run: docker-compose up --build -d
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      - name: Wait for Django server to start
+        run: sleep 20
 
-      - name: Start Django server
-        run: python manage.py runserver
+#      - name: Setup Python
+#        uses: actions/setup-python@v2
+#        with:
+#          python-version: '3.x'
 
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
-
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Wait for server to start
-        run: sleep 15
+#      - name: Install dependencies
+#        run: pip install -r requirements.txt
 
       - name: Run tests
-        run: python manage.py test
+        run: docker-compose exec web python manage.py test
 
       - name: Run Robot Tests
-        run: robot users/tests/functionalTests/tests_functional_post.robot
-
+        run: docker-compose exec web robot users/tests/functionalTests/tests_functional_post.robot
