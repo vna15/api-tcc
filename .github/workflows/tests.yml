@@ -6,9 +6,8 @@ on:
       - main
 
 jobs:
-  test:
+  start_server:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -21,14 +20,30 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Start Django server
+        run: python manage.py runserver
+
+  test:
+    runs-on: ubuntu-latest
+    needs: start_server
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Wait for server to start
+        run: sleep 10
+
       - name: Run tests
         run: python manage.py test
-
-      - name: Start application
-        run: python manage.py runserver --noreload
 
       - name: Run Robot Tests
         run: robot users/tests/functionalTests/tests_functional_post.robot
 
-      - name: Stop application
-        run: killall python
