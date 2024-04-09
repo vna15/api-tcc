@@ -25,7 +25,7 @@ jobs:
         run: python manage.py test
 
       - name: Start application
-        run: python manage.py runserver
+        run: python manage.py runserver --noreload
 
       - name: Run Robot Tests
         run: robot users/tests/functionalTests/tests_functional_post.robot
