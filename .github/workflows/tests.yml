@@ -18,10 +18,9 @@ jobs:
       - name: Build and run Docker container
         run: docker-compose up --build -d
 
-#      - name: Inicialização do contêiner Docker
-#        run: docker run -d -p 8000:8000 tests python manage.py runserver
+      - name: Inicialização do contêiner Docker
+        run: docker run -d -p 8000:8000 tests python manage.py runserver
 
-          # Passo para verificar se o servidor Docker está acessível
       - name: Check if Docker server is accessible
         run: sleep 10
 
