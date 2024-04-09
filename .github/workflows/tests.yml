@@ -21,8 +21,8 @@ jobs:
       - name: Inicialização do contêiner Docker
         run: docker run -d -p 8000:8000 tests python manage.py runserver
 
-#      - name: Check if Docker server is accessible
-#        run: sleep 10
+      - name: Check if Docker server is accessible
+        run: sleep 10
 #
 #      - name: Check if Docker server is accessible
 #        run: curl --retry 10 --retry-connrefused http://localhost:8000/
