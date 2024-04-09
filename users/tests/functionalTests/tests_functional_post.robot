@@ -95,5 +95,5 @@ Deletar Usuário
     Create Session    Users    http://web:8000
     ${headers}    Create Dictionary    Content-Type=application/json
     ${data}    Create Dictionary    email=${email}
-    ${response}    Delete  Request    Users    /user/    json=${data}    headers=${headers}
+    ${response}    Delete Request    Users    /user/    json=${data}    headers=${headers}
     Should Be Equal As Strings    ${response.status_code}    204
