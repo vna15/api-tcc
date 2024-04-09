@@ -19,7 +19,7 @@ jobs:
         run: docker-compose up --build -d
 
       - name: Inicialização do contêiner Docker
-        run: docker run -d -p 8000:8000 tests python manage.py runserver 0.0.0.0:8000
+        run: docker run -d -p 8000:8000 tests python manage.py runserver
 
       - name: Wait for Django server to start
         run: sleep 10
