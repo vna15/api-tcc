@@ -28,4 +28,4 @@ jobs:
         run: docker-compose run web python manage.py test
 
       - name: Run Robot Tests
-        run: docker-compose run web robot users/tests/functionalTests/tests_functional_post.robot
+        run: docker-compose run web robot users/tests/functionalTests/
