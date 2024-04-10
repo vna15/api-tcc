@@ -8,7 +8,7 @@ ${short_string}    aaaaaaaaaaaaa
 
 *** Test Cases ***
 Teste de Criação de Usuário
-    Create Session    Users    http://web:8000
+    Create Session    Users    http://localhost:8000
     ${headers}    Create Dictionary    Content-Type=application/json
     ${data}    Create Dictionary    email=test@example.com    fullName=John Doe    CEP=12345678    age=30
     ${response}    Post Request    Users    /user/    json=${data}    headers=${headers}
