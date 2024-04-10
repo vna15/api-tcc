@@ -3,14 +3,14 @@ Library    RequestsLibrary
 Library    Collections
 
 *** Variables ***
-${base_url}    http://web:8000/user/
+${base_url}    http://web:8000
 
 *** Test Cases ***
 Teste de Busca de Usuário por E-mail
     [Documentation]    Verifica se é possível buscar um usuário pelo e-mail especificado.
     Criar Usuário
     ${email}    Set Variable    test@example.com
-    ${response}    Get Request    Users     ${base_url}?email=${email}
+    ${response}    Get Request    Users     ${base_url}/user/?email=${email}
     Should Be Equal As Strings    ${response.status_code}    200    # Verifica se o código de status é 200 OK
     ${json}    Set Variable    ${response.json()}
     Dictionary Should Contain Key    ${json}    email    ${email}
