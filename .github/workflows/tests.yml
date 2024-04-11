@@ -27,5 +27,11 @@ jobs:
       - name: Run tests
         run: docker-compose run web python manage.py test
 
-      - name: Run Robot Tests
+      - name: Run Robot Functional Tests
         run: docker-compose run web robot users/tests/functionalTests/
+
+      - name: Run Robot Security Tests
+        run: docker-compose run web robot users/tests/securityTests/
+
+      - name: Run performance test
+        run: docker-compose run web pytest users/tests/performanceTests/tests_performance.py
