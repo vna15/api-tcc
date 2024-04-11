@@ -2,11 +2,22 @@ from django.test import TestCase
 from rest_framework.test import APIClient
 from rest_framework import status
 from ...models import Users
+from django.contrib.auth.models import User
+from rest_framework_simplejwt.tokens import AccessToken
 
 
 class TestUsersViews(TestCase):
     def setUp(self):
         self.client = APIClient()
+
+        # Cria um usuário de teste
+        self.user = User.objects.create_user(username='testuser', password='12345')
+
+        # Cria um token JWT para o usuário
+        self.token = AccessToken.for_user(self.user)
+
+        # Configura a autenticação com o token JWT nos headers do cliente
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.token}')
 
     def test_create_user(self):
         # Teste de criação de usuário com dados válidos

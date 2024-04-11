@@ -1,11 +1,22 @@
 from django.test import TestCase
 from rest_framework.test import APIClient
 from rest_framework import status
+from django.contrib.auth.models import User
+from rest_framework_simplejwt.tokens import AccessToken
 
 
 class TestUserRetrievalContractProvider(TestCase):
     def setUp(self):
         self.client = APIClient()
+
+        # Cria um usuário de teste
+        self.user = User.objects.create_user(username='testuser', password='12345')
+
+        # Cria um token JWT para o usuário
+        self.token = AccessToken.for_user(self.user)
+
+        # Configura a autenticação com o token JWT nos headers do cliente
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.token}')
 
     def test_user_retrieval_contract_provider(self):
         data = {
@@ -32,6 +43,15 @@ class TestUserRetrievalContractProvider(TestCase):
 class TestUserUpdateContractProvider(TestCase):
     def setUp(self):
         self.client = APIClient()
+
+        # Cria um usuário de teste
+        self.user = User.objects.create_user(username='testuser', password='12345')
+
+        # Cria um token JWT para o usuário
+        self.token = AccessToken.for_user(self.user)
+
+        # Configura a autenticação com o token JWT nos headers do cliente
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.token}')
 
     def test_user_update_contract_provider(self):
         data = {
@@ -64,6 +84,15 @@ class TestUserUpdateContractProvider(TestCase):
 class TestUserDeletionContractProvider(TestCase):
     def setUp(self):
         self.client = APIClient()
+
+        # Cria um usuário de teste
+        self.user = User.objects.create_user(username='testuser', password='12345')
+
+        # Cria um token JWT para o usuário
+        self.token = AccessToken.for_user(self.user)
+
+        # Configura a autenticação com o token JWT nos headers do cliente
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.token}')
 
     def test_user_deletion_contract_provider(self):
         data = {
