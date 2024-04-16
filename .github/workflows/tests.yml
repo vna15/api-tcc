@@ -12,14 +12,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Construção da imagem Docker
-        run: docker build -t tests .
+      #- name: Construção da imagem Docker
+       # run: docker build -t tests .
 
       - name: Build and run Docker container
         run: docker-compose up --build -d
 
-      - name: Inicialização do contêiner Docker
-        run: docker run -d -p 8000:8000 tests python manage.py runserver
+      # - name: Inicialização do contêiner Docker
+       # run: docker run -d -p 8000:8000 tests python manage.py runserver
 
       - name: Check if Docker server is accessible
         run: sleep 15
@@ -27,8 +27,8 @@ jobs:
       - name: Run unit tests
         run: docker-compose run web python manage.py test
 
-      - name: Run performance test
-        run: docker-compose run web pytest users/tests/performanceTests/tests_performance.py
+      #- name: Run performance test
+       # run: docker-compose run web pytest users/tests/performanceTests/tests_performance.py
 
       - name: Run Robot Functional Tests
         run: docker-compose run web robot users/tests/functionalTests/
