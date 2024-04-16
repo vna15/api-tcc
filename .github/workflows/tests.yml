@@ -25,14 +25,14 @@ jobs:
         run: sleep 15
 
       - name: Run unit tests
-        run: docker-compose exec web python manage.py test
+        run: docker-compose exec -T web python manage.py test
 
       #- name: Run performance test
        # run: docker-compose run web pytest users/tests/performanceTests/tests_performance.py
 
       - name: Run Robot Functional Tests
-        run: docker-compose exec web robot users/tests/functionalTests/
+        run: docker-compose exec -T web robot users/tests/functionalTests/
 
       - name: Run Robot Security Tests
-        run: docker-compose exec web robot users/tests/securityTests/
+        run: docker-compose exec -T web robot users/tests/securityTests/
 
