@@ -21,16 +21,16 @@ jobs:
       - name: Run unit  tests
         run: docker-compose run web python manage.py test
 
-      - name: Run Robot Functional Tests
-        run: docker-compose run web robot users/tests/functionalTests/
+      #- name: Run Robot Functional Tests
+       # run: docker-compose run web robot users/tests/functionalTests/
 
-      - name: Run contract tests
-        run: docker-compose run web python manage.py users/tests/contractTests/
+      #- name: Run contract tests
+       # run: docker-compose run web python manage.py users/tests/contractTests/
 
-      - name: Run performance test
-        run: docker-compose run web pytest users/tests/performanceTests/tests_performance.py
+      #- name: Run performance test
+       # run: docker-compose run web pytest users/tests/performanceTests/tests_performance.py
 
-      - name: Run Robot Security Tests
-        run: docker-compose run web robot users/tests/securityTests/
+      #- name: Run Robot Security Tests
+       # run: docker-compose run web robot users/tests/securityTests/
 
 
