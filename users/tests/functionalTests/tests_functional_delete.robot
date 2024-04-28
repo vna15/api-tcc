@@ -22,11 +22,13 @@ Teste de Deleção de Usuário
 Tentar Deletar Usuário com E-mail Inexistente
     [Documentation]    Verificar se o sistema trata adequadamente tentativas de exclusão de um usuário com um e-mail que não existe no sistema.
     ${TOKEN}=   Obter token
+    Criar Usuário
     Create Session    Users    ${base_url}
-    ${updated_data}    Create Dictionary    email=update@teste.com    fullName=John Doe    CEP=12345678    age=30    # Defina os dados atualizados do usuário
+    ${email}    Set Variable    test@example.com
     ${headers}=    Create Dictionary    Authorization=${TOKEN}    Content-Type=application/json
-    ${response}    Put Request    Users    /user/    json=${updated_data}    headers=${headers}
-    Should Be Equal As Strings    ${response.status_code}    404    # Verifica se o código de status é 404 Not Found
+    ${data}    Create Dictionary    email=${email}
+    ${response}    Delete Request    Users    /user/    json=${data}    headers=${headers}
+    Should Be Equal As Strings    ${response.status_code}    404   # Verifica se o código de status é 404 Not Found
     ${json}    Set Variable    ${response.json()}
     Dictionary Should Contain Key    ${json}    error    User not found    # Verifica se a mensagem de erro é correta
 

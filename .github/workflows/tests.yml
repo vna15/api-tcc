@@ -24,15 +24,19 @@ jobs:
       - name: Check if Docker server is accessible
         run: sleep 15
 
-      - name: Run unit tests
-        run: docker-compose run web python manage.py test
-
-      - name: Run performance test
-        run: docker-compose run web pytest users/tests/performanceTests/tests_performance.py
+      - name: Run unit  tests
+        run: docker-compose run web python manage.py users/tests/unitTests/
 
       - name: Run Robot Functional Tests
         run: docker-compose run web robot users/tests/functionalTests/
 
+      - name: Run unit  tests
+        run: docker-compose run web python manage.py users/tests/contractTests/
+
+      - name: Run performance test
+        run: docker-compose run web pytest users/tests/performanceTests/tests_performance.py
+
       - name: Run Robot Security Tests
         run: docker-compose run web robot users/tests/securityTests/
+
 
