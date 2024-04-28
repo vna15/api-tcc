@@ -3,7 +3,7 @@ Library    RequestsLibrary
 Library    Collections
 
 *** Variables ***
-${base_url}    http://web:8000
+${base_url}    http://web:80
 ${USERNAME}    admin
 ${PASSWORD}    admin
 
