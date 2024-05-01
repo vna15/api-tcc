@@ -18,7 +18,7 @@ jobs:
       - name: Check if Docker server is accessible
         run: sleep 15
 
-      - name: Run unit  tests
+      - name: Run tests
         run: docker-compose run web python manage.py test
 
       #- name: Run Robot Functional Tests
