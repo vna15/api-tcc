@@ -22,7 +22,7 @@ jobs:
         run: docker-compose run web python manage.py test
 
       - name: Run Robot Functional Tests
-       # run: docker-compose run web robot users/tests/functionalTests/
+        run: docker-compose run web robot users/tests/functionalTests/
 
       - name: Run contract tests
         run: docker-compose run web python manage.py users/tests/contractTests/
