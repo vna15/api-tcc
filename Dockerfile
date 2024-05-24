@@ -1,7 +1,7 @@
 # Use uma imagem base do Python
 FROM python:3.8
 
-# Define o diretório de trabalho dentro do contêiner
+# Define o diretório de trabalho dentro do container
 WORKDIR /app
 
 # Instala as dependências do projeto
